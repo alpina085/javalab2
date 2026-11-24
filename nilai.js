@@ -10,33 +10,71 @@
 // =============================================================
 
 function hitungNilaiAkhir(tugas, uts, uas) {
-  // TODO: salin dari Lab 1
-  return 0;
+  const nilaiAkhir = (0.3 * tugas) + (0.3 * uts) + (0.4 * uas);
+  return Math.round(nilaiAkhir * 10) / 10;
 }
 
 function tentukanGrade(nilai) {
-  // TODO: salin dari Lab 1
-  return '?';
+ if (nilai >= 85) {
+    return 'A';
+  } else if (nilai >= 70) {
+    return 'B';
+  } else if (nilai >= 55) {
+    return 'C';
+  } else if (nilai >= 40) {
+    return 'D';
+  } else {
+    return 'E';
+  }
 }
 
 function buatRekap(daftar) {
-  // TODO: salin dari Lab 1 (map + spread, tambah nilaiAkhir, grade, lulus)
-  return daftar;
+   return daftar.map((mhs) => {
+    const nilaiAkhir = hitungNilaiAkhir(mhs.tugas, mhs.uts, mhs.uas);
+    const grade = tentukanGrade(nilaiAkhir);
+    const lulus = nilaiAkhir >= 55;
+
+    return {
+      ...mhs,
+      nilaiAkhir,
+      grade,
+      lulus
+    };
+  });
 }
 
 function hitungRataRata(rekap) {
-  // TODO: salin dari Lab 1
-  return 0;
+   if (rekap.length === 0) return 0;
+
+  let total = 0;
+  for (let i = 0; i < rekap.length; i++) {
+    total += rekap[i].nilaiAkhir;
+  }
+
+  const rataRata = total / rekap.length;
+  return Math.round(rataRata * 10) / 10;
 }
 
 function cariTertinggi(rekap) {
-  // TODO: salin dari Lab 1. Tambahkan: jika rekap kosong -> return null
-  return null;
+  let tertinggi = rekap[0];
+
+  for (let i = 1; i < rekap.length; i++) {
+    if (rekap[i].nilaiAkhir > tertinggi.nilaiAkhir) {
+      tertinggi = rekap[i];
+    }
+  }
+
+  return tertinggi;
 }
 
 function hitungDistribusiGrade(rekap) {
-  // TODO: salin dari Lab 1
-  return { A: 0, B: 0, C: 0, D: 0, E: 0 };
+  const distribusi = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+
+  for (const mhs of rekap) {
+    distribusi[mhs.grade]++;
+  }
+
+  return distribusi;
 }
 
 function cariMahasiswa(rekap, kataKunci) {
